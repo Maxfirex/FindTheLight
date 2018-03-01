@@ -24,6 +24,7 @@ public class CameraController : MonoBehaviour {
         smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
 
         mouseLook += smoothV;
+        mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
 
         //rotates up and down
         transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
