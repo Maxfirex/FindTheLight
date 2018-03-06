@@ -22,7 +22,6 @@ public class GunController : MonoBehaviour {
         {
             if (Time.time > 1/fireRate + lastShot)
             {
-                Debug.Log("Called");
                 Shoot();
 
                 FindObjectOfType<AudioManager>().Play("shoot");
