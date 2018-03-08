@@ -13,6 +13,7 @@ public class GunController : MonoBehaviour {
     void Start ()
     {
         cam = this.transform.parent.gameObject;
+        FindObjectOfType<AudioManager>().Play("background", true);
     }
 	
 	// Update is called once per frame
@@ -24,7 +25,7 @@ public class GunController : MonoBehaviour {
             {
                 Shoot();
 
-                FindObjectOfType<AudioManager>().Play("shoot");
+                FindObjectOfType<AudioManager>().Play("shoot", true);
 
                 lastShot = Time.time;
             }

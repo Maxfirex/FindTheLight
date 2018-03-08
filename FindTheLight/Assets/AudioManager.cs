@@ -15,12 +15,14 @@ public class AudioManager : MonoBehaviour {
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.outputAudioMixerGroup = s.output;
         }
 	}
 	
-	public void Play(string name)
+	public void Play(string name, bool loop)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.loop = loop;
 
         s.source.Play();
     }
