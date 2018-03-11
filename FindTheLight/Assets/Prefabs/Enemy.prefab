@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7b77cfcb029484582db5acfb784d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
 --- !u!114 &114747028124302090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311af297c1ffa2a48ad84ccb99ab38f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   speed: 15
   damage: 5
 --- !u!136 &136450506496043342

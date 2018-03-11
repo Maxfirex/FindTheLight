@@ -9,14 +9,19 @@ public class GunController : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
 
-    public float bulletSpeed = 30;
-    public float lifeTime = 2;
+    public float bulletSpeed = 30f;
+    public float lifeTime = 5f;
 
     private float lastShot = 0f;
+
+    private GameObject muzzleFlash;
 
     void Start ()
     {
         FindObjectOfType<AudioManager>().Play("background", true);
+
+        muzzleFlash = transform.GetChild(1).gameObject;
+        Physics.IgnoreCollision(muzzleFlash.GetComponent<Collider>(), transform.GetComponent<Collider>());
     }
 	
 	// Update is called once per frame
@@ -26,7 +31,10 @@ public class GunController : MonoBehaviour {
         {
             if (Time.time > 1/fireRate + lastShot)
             {
+                EnableComponents();
                 Shoot();
+
+                Invoke("DisableComponents", 1 / fireRate);
 
                 FindObjectOfType<AudioManager>().Play("shoot", true);
 
@@ -42,25 +50,29 @@ public class GunController : MonoBehaviour {
 
     void Shoot()
     {
+
+
+
         GameObject bullet = Instantiate(bulletPrefab);
         // Ignore spawn collision with weapon
         Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
+        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), transform.parent.parent.GetComponent<Collider>());
         // Setting bullet spawn position
         bullet.transform.position = bulletSpawn.position;
-
-        Vector3 rotation = bullet.transform.rotation.eulerAngles;
         // Bullet facing forward from the gun
-        bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
+        bullet.transform.rotation = Quaternion.Euler(transform.eulerAngles);
         // Moving a bullet
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward * bulletSpeed, ForceMode.Impulse);
         // Destroying bullet
-        StartCoroutine(DestroyBullet(bullet, lifeTime));
+        Destroy(bullet, lifeTime);
+    }
+    void EnableComponents()
+    {
+        muzzleFlash.GetComponent<MeshRenderer>().enabled = true;
     }
 
-    private IEnumerator DestroyBullet(GameObject bullet, float delay)
+    void DisableComponents()
     {
-        yield return new WaitForSeconds(delay);
-
-        Destroy(bullet);
+        muzzleFlash.GetComponent<MeshRenderer>().enabled = false;
     }
 }
