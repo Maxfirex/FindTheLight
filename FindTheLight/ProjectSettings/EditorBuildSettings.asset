@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/Menu.unity
+    guid: 4473d81048314784090f0d31ab390ac6
+  - enabled: 1
+    path: Assets/_Scenes/FindTheLight.unity
+    guid: 1569f616df4989b49be3260114ed5869

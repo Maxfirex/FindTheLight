@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour {
         {
             //displays cursor on escape
             Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Menu");
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
