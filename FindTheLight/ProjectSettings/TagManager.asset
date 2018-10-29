@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - maze
   - MuzzleFlash
+  - Wall
   layers:
   - Default
   - TransparentFX

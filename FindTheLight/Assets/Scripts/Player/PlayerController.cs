@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(horizontal, 0, vertical);
 
+        StopPlayerMovementInAir();
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //displays cursor on escape
@@ -50,15 +52,29 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground") canJump = true;
-        if (collision.gameObject.tag == "Wall") MakePlayerFall();
     }
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground") canJump = false;
     }
 
-    void MakePlayerFall()
+    void StopPlayerMovementInAir()
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.down * 10f, ForceMode.Impulse);
+        // Get the velocity
+        Vector3 horizontalMove = GetComponent<Rigidbody>().velocity;
+        // Don't use the vertical velocity
+        horizontalMove.y = 0;
+        // Calculate the approximate distance that will be traversed
+        float distance = horizontalMove.magnitude * Time.fixedDeltaTime;
+        // Normalize horizontalMove since it should be used to indicate direction
+        horizontalMove.Normalize();
+        RaycastHit hit;
+
+        // Check if the body's current velocity will result in a collision
+        if (GetComponent<Rigidbody>().SweepTest(horizontalMove, out hit, distance))
+        {
+            // If so, stop the movement
+            GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+        }
     }
 }
